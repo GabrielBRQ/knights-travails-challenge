@@ -49,9 +49,11 @@ class Step {
   
       let queue = [[initialPos]];
       let nextQueue = [];
-  
+      let stepCounter = 0;
+
       while(queue.length){
         while(queue.length){
+          stepCounter++;
           queue.shift();
           let current = [newStep.value[0], newStep.value[1]]
       
@@ -73,7 +75,7 @@ class Step {
               newStep.before = beforeObj;
   
               if (nextX === finalPos[0] && nextY === finalPos[1]) {
-                this.getSteps(newStep);
+                this.getSteps(newStep, stepCounter);
                 queue = [];
                 nextQueue = [];
                 break;
@@ -88,12 +90,13 @@ class Step {
   
     }
   
-    getSteps(step, allSteps = []){
+    getSteps(step, stepCounter, allSteps = []){
       if(step.before === undefined || this.before === 0){
+        console.log(`You made it in ${stepCounter} steps!`);
         console.log(allSteps);
       } else {
         allSteps.push(step.value);
-        allSteps = this.getSteps(step.before, allSteps);
+        allSteps = this.getSteps(step.before, stepCounter, allSteps);
       }
     }
   }
@@ -101,4 +104,4 @@ class Step {
   
   let cavalin = new Knight([0,0]);
   
-  cavalin.knightMoves([0,0], [4,1]);
+  cavalin.knightMoves([0,0], [3,3]);
